@@ -564,6 +564,10 @@ abstract class FlutterRustBridgeExampleSingleBlockTest {
 
   FlutterRustBridgeTaskConstMeta get kHandleTypeAliasModelConstMeta;
 
+  Future<String> asStringMethodEvent({required Event that, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kAsStringMethodEventConstMeta;
+
   Future<int> sumMethodSumWith({required SumWith that, required int y, required int z, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kSumMethodSumWithConstMeta;
@@ -1007,9 +1011,13 @@ class EnumOpaque with _$EnumOpaque {
 @freezed
 class Event with _$Event {
   const factory Event({
+    required FlutterRustBridgeExampleSingleBlockTest bridge,
     required String address,
     required String payload,
   }) = _Event;
+  Future<String> asString({dynamic hint}) => bridge.asStringMethodEvent(
+        that: this,
+      );
 }
 
 class ExoticOptionals {

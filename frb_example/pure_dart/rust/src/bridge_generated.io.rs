@@ -700,6 +700,11 @@ pub extern "C" fn wire_handle_type_alias_model(port_: i64, input: u64) {
 }
 
 #[no_mangle]
+pub extern "C" fn wire_as_string__method__Event(port_: i64, that: *mut wire_Event) {
+    wire_as_string__method__Event_impl(port_, that)
+}
+
+#[no_mangle]
 pub extern "C" fn wire_sum__method__SumWith(port_: i64, that: *mut wire_SumWith, y: u32, z: u32) {
     wire_sum__method__SumWith_impl(port_, that, y, z)
 }
@@ -865,6 +870,11 @@ pub extern "C" fn new_box_autoadd_enum_dart_opaque_0() -> *mut wire_EnumDartOpaq
 #[no_mangle]
 pub extern "C" fn new_box_autoadd_enum_opaque_0() -> *mut wire_EnumOpaque {
     support::new_leak_box_ptr(wire_EnumOpaque::new_with_null_ptr())
+}
+
+#[no_mangle]
+pub extern "C" fn new_box_autoadd_event_0() -> *mut wire_Event {
+    support::new_leak_box_ptr(wire_Event::new_with_null_ptr())
 }
 
 #[no_mangle]
@@ -1480,6 +1490,12 @@ impl Wire2Api<EnumOpaque> for *mut wire_EnumOpaque {
         Wire2Api::<EnumOpaque>::wire2api(*wrap).into()
     }
 }
+impl Wire2Api<Event> for *mut wire_Event {
+    fn wire2api(self) -> Event {
+        let wrap = unsafe { support::box_from_leak_ptr(self) };
+        Wire2Api::<Event>::wire2api(*wrap).into()
+    }
+}
 impl Wire2Api<ExoticOptionals> for *mut wire_ExoticOptionals {
     fn wire2api(self) -> ExoticOptionals {
         let wrap = unsafe { support::box_from_leak_ptr(self) };
@@ -1762,6 +1778,14 @@ impl Wire2Api<EnumOpaque> for wire_EnumOpaque {
                 EnumOpaque::RwLock(ans.field0.wire2api())
             },
             _ => unreachable!(),
+        }
+    }
+}
+impl Wire2Api<Event> for wire_Event {
+    fn wire2api(self) -> Event {
+        Event {
+            address: self.address.wire2api(),
+            payload: self.payload.wire2api(),
         }
     }
 }
@@ -2210,6 +2234,13 @@ pub struct wire_Customized {
 pub struct wire_DartOpaqueNested {
     first: wire_DartOpaque,
     second: wire_DartOpaque,
+}
+
+#[repr(C)]
+#[derive(Clone)]
+pub struct wire_Event {
+    address: *mut wire_uint_8_list,
+    payload: *mut wire_uint_8_list,
 }
 
 #[repr(C)]
@@ -2849,6 +2880,15 @@ pub extern "C" fn inflate_EnumOpaque_RwLock() -> *mut EnumOpaqueKind {
             field0: wire_RwLockHideData::new_with_null_ptr(),
         }),
     })
+}
+
+impl NewWithNullPtr for wire_Event {
+    fn new_with_null_ptr() -> Self {
+        Self {
+            address: core::ptr::null_mut(),
+            payload: core::ptr::null_mut(),
+        }
+    }
 }
 
 impl NewWithNullPtr for wire_ExoticOptionals {

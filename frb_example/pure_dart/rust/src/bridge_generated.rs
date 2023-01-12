@@ -1890,6 +1890,19 @@ fn wire_handle_type_alias_model_impl(port_: MessagePort, input: impl Wire2Api<u6
         },
     )
 }
+fn wire_as_string__method__Event_impl(port_: MessagePort, that: impl Wire2Api<Event> + UnwindSafe) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap(
+        WrapInfo {
+            debug_name: "as_string__method__Event",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || {
+            let api_that = that.wire2api();
+            move |task_callback| Ok(Event::as_string(&api_that))
+        },
+    )
+}
 fn wire_sum__method__SumWith_impl(
     port_: MessagePort,
     that: impl Wire2Api<SumWith> + UnwindSafe,
