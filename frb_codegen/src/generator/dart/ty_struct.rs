@@ -140,6 +140,7 @@ impl TypeDartGeneratorTrait for TypeStructRefGenerator<'_> {
 
             format!(
                 "{}{}class {} with _${} {{
+                {}
                 const factory {}({{{}}}) = _{};
                 {}
             }}",
@@ -147,6 +148,11 @@ impl TypeDartGeneratorTrait for TypeStructRefGenerator<'_> {
                 metadata,
                 self.ir.name,
                 self.ir.name,
+                if has_methods {
+                    format!("const {}._();", self.ir.name)
+                } else {
+                    "".to_owned()
+                },
                 self.ir.name,
                 constructor_params,
                 self.ir.name,

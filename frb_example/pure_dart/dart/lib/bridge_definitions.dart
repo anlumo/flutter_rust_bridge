@@ -1010,6 +1010,7 @@ class EnumOpaque with _$EnumOpaque {
 
 @freezed
 class Event with _$Event {
+  const Event._();
   const factory Event({
     required FlutterRustBridgeExampleSingleBlockTest bridge,
     required String address,
