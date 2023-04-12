@@ -8,12 +8,14 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge.dart';
 import 'package:uuid/uuid.dart';
+import 'package:js/js.dart';
 import 'bridge_generated.dart';
 export 'bridge_generated.dart';
 
 class FlutterRustBridgeExamplePlatform extends FlutterRustBridgeBase<FlutterRustBridgeExampleWire>
     with FlutterRustBridgeSetupMixin {
-  FlutterRustBridgeExamplePlatform(FutureOr<WasmModule> dylib) : super(FlutterRustBridgeExampleWire(dylib)) {
+  FlutterRustBridgeExamplePlatform(FutureOr<FlutterRustBridgeExampleWasmModule> dylib)
+      : super(FlutterRustBridgeExampleWire(dylib)) {
     setupMixinConstructor();
   }
   Future<void> setup() => inner.init;
@@ -80,8 +82,8 @@ external FlutterRustBridgeExampleWasmModule get wasmModule;
 @JS()
 @anonymous
 class FlutterRustBridgeExampleWasmModule implements WasmModule {
-  external Object /* Promise */ call([String? moduleName]);
-  external FlutterRustBridgeExampleWasmModule bind(dynamic thisArg, String moduleName);
+  external Object /* Promise */ call(Object? this_, [String? moduleName]);
+  external Object bind(dynamic thisArg, String moduleName);
   external dynamic /* void */ wire_draw_mandelbrot(
       NativePortType port_, List<dynamic> image_size, List<dynamic> zoom_point, double scale, int num_threads);
 
@@ -91,7 +93,8 @@ class FlutterRustBridgeExampleWasmModule implements WasmModule {
 
   external dynamic /* void */ wire_off_topic_memory_test_input_array(NativePortType port_, Uint8List input);
 
-  external dynamic /* void */ wire_off_topic_memory_test_output_zero_copy_buffer(NativePortType port_, int len);
+  external dynamic /* void */
+      wire_off_topic_memory_test_output_zero_copy_buffer(NativePortType port_, int len);
 
   external dynamic /* void */ wire_off_topic_memory_test_output_vec_u8(NativePortType port_, int len);
 
@@ -112,8 +115,7 @@ class FlutterRustBridgeExampleWasmModule implements WasmModule {
 // Section: WASM wire connector
 
 class FlutterRustBridgeExampleWire extends FlutterRustBridgeWasmWireBase<FlutterRustBridgeExampleWasmModule> {
-  FlutterRustBridgeExampleWire(FutureOr<WasmModule> module)
-      : super(WasmModule.cast<FlutterRustBridgeExampleWasmModule>(module));
+  FlutterRustBridgeExampleWire(FutureOr<FlutterRustBridgeExampleWasmModule> module) : super(module);
 
   void wire_draw_mandelbrot(
           NativePortType port_, List<dynamic> image_size, List<dynamic> zoom_point, double scale, int num_threads) =>
