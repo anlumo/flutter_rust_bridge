@@ -30,7 +30,7 @@ external ApiClass2WasmModule get wasmModule;
 @JS()
 @anonymous
 class ApiClass2WasmModule implements WasmModule {
-  external Object /* Promise */ call(Object? this_, [String? moduleName]);
+  external Object /* Promise */ call([Object? this_, String? moduleName]);
   external Object bind(dynamic thisArg, String moduleName);
   external dynamic /* void */ wire_simple_adder_2(NativePortType port_, int a, int b);
 }
