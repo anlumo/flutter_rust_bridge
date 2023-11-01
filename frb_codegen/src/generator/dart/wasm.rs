@@ -35,7 +35,7 @@ pub fn push_wasm_module(
     ));
     lines.wasm.push(format!(
         "@JS() @anonymous class {dart_wasm_module_name} implements WasmModule {{
-            external Object /* Promise */ call(Object? this_, [String? moduleName]);
+            external Object /* Promise */ call([Object? this_, String? moduleName]);
             external Object bind(dynamic thisArg, String moduleName);",
     ));
     lines.wasm.push(dart_wasm_funcs.join("\n\n"));

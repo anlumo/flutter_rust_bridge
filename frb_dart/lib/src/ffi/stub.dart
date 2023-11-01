@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'io.dart' if (dart.library.html) 'web.dart'
-    show DartPostCObject, NativePortType, WireSyncReturn;
+import 'io.dart' if (dart.library.html) 'web.dart' show DartPostCObject, NativePortType, WireSyncReturn;
 export 'io.dart' if (dart.library.html) 'web.dart'
     show
         ExternalLibrary,
@@ -53,8 +52,7 @@ extension StoreDartPostCObjectExt on FlutterRustBridgeWireBase {
 }
 
 /// Generates the dynamic Dart object from either an FFI struct or a JS value
-List<dynamic> wireSyncReturnIntoDart(WireSyncReturn syncReturn) =>
-    throw UnimplementedError();
+List<dynamic> wireSyncReturnIntoDart(WireSyncReturn syncReturn) => throw UnimplementedError();
 
 /// Whether the web platform has been isolated by COOP and COEP headers,
 /// and is capable of sharing buffers between workers.
@@ -67,8 +65,7 @@ int castInt(Object? value) => value as int;
 /// Only used on the Web.
 Object castNativeBigInt(int value) => throw UnimplementedError();
 
-abstract class FlutterRustBridgeWasmWireBase<T extends WasmModule>
-    extends FlutterRustBridgeWireBase {
+abstract class FlutterRustBridgeWasmWireBase<T extends WasmModule> extends FlutterRustBridgeWireBase {
   Future<T> get init => throw UnimplementedError();
   FlutterRustBridgeWasmWireBase([FutureOr<T>? module]);
 }
@@ -84,7 +81,7 @@ dynamic eval(String script) => throw UnimplementedError();
 /// Please refer to [Setting up the web server](http://cjycode.com/flutter_rust_bridge/build_wasm.html#setting-up-the-web-server)
 /// for an example of a Dart web server that accomplishes this task.
 abstract class WasmModule {
-  Object call(Object? this_, [String? moduleName]);
+  Object call([Object? this_, String? moduleName]);
 
   /// Create a new WASM module initializer that is bound to the specified binary.
   Object bind(dynamic thisArg, String moduleName);
@@ -94,8 +91,7 @@ abstract class WasmModule {
   }
 
   /// Initialize a [WasmModule] with the specified kind of [Modules].
-  static FutureOr<T> initialize<T extends WasmModule>(
-          {required Modules kind, T Function()? module}) =>
+  static FutureOr<T> initialize<T extends WasmModule>({required Modules kind, T Function()? module}) =>
       throw UnimplementedError();
 }
 
@@ -110,8 +106,7 @@ abstract class Modules {
   ///
   /// The expected output is a file named `$root.js` and the accompanying
   /// WASM binary named `${root}_bg.wasm`.
-  const factory Modules.noModules({required String root}) =
-      _WasmBindgenNoModules;
+  const factory Modules.noModules({required String root}) = _WasmBindgenNoModules;
 
   /// How a WASM module is brought into Dart's scope and initialized.
   ///
@@ -124,6 +119,5 @@ class _WasmBindgenNoModules extends Modules {
   const _WasmBindgenNoModules({required this.root});
 
   @override
-  FutureOr<T> initializeModule<T extends WasmModule>(T Function()? module) =>
-      throw UnimplementedError();
+  FutureOr<T> initializeModule<T extends WasmModule>(T Function()? module) => throw UnimplementedError();
 }

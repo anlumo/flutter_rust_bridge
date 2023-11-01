@@ -1102,7 +1102,7 @@ external FlutterRustBridgeExampleSingleBlockTestWasmModule get wasmModule;
 @JS()
 @anonymous
 class FlutterRustBridgeExampleSingleBlockTestWasmModule implements WasmModule {
-  external Object /* Promise */ call(Object? this_, [String? moduleName]);
+  external Object /* Promise */ call([Object? this_, String? moduleName]);
   external Object bind(dynamic thisArg, String moduleName);
   external dynamic /* void */ wire_simple_adder(NativePortType port_, int a, int b);
 

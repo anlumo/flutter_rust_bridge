@@ -118,7 +118,7 @@ external FlutterRustBridgeExampleWasmModule get wasmModule;
 @JS()
 @anonymous
 class FlutterRustBridgeExampleWasmModule implements WasmModule {
-  external Object /* Promise */ call(Object? this_, [String? moduleName]);
+  external Object /* Promise */ call([Object? this_, String? moduleName]);
   external Object bind(dynamic thisArg, String moduleName);
   external dynamic /* void */ wire_draw_mandelbrot(
       NativePortType port_, List<dynamic> image_size, List<dynamic> zoom_point, double scale, int num_threads);

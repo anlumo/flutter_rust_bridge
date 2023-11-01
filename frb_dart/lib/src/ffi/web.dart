@@ -6,7 +6,7 @@ import 'package:js/js.dart';
 export 'package:js/js_util.dart' show promiseToFuture, getProperty;
 
 abstract class WasmModule {
-  Object call(Object? this_, [String? moduleName]);
+  Object call([Object? this_, String? moduleName]);
 
   /// Create a new WASM module initializer that is bound to the specified binary.
   Object bind(dynamic thisArg, String moduleName);
@@ -15,16 +15,14 @@ abstract class WasmModule {
     return Future.value(module).then((module) => module as T);
   }
 
-  static FutureOr<T> initialize<T extends WasmModule>(
-          {required Modules kind, T Function()? module}) =>
+  static FutureOr<T> initialize<T extends WasmModule>({required Modules kind, T Function()? module}) =>
       kind.initializeModule(module);
 }
 
 abstract class Modules {
   const Modules();
 
-  const factory Modules.noModules({required String root}) =
-      _WasmBindgenNoModules;
+  const factory Modules.noModules({required String root}) = _WasmBindgenNoModules;
 
   FutureOr<T> initializeModule<T extends WasmModule>(T Function()? module);
 
@@ -34,8 +32,7 @@ abstract class Modules {
         throw const MissingHeaderException();
       case true:
       case null:
-        warn(
-            'Warning: crossOriginIsolated is null, browser might not support buffer sharing.');
+        warn('Warning: crossOriginIsolated is null, browser might not support buffer sharing.');
         return;
     }
   }
@@ -46,8 +43,7 @@ class _WasmBindgenNoModules extends Modules {
   const _WasmBindgenNoModules({required this.root});
 
   @override
-  FutureOr<T> initializeModule<T extends WasmModule>(
-      T Function()? module) async {
+  FutureOr<T> initializeModule<T extends WasmModule>(T Function()? module) async {
     _ensureCrossOriginIsolated();
     final script = ScriptElement()..src = '$root.js';
     document.head!.append(script);
@@ -118,13 +114,11 @@ typedef WireSyncReturn = List<dynamic>;
 
 List<dynamic> wireSyncReturnIntoDart(WireSyncReturn syncReturn) => syncReturn;
 
-class FlutterRustBridgeWasmWireBase<T extends WasmModule>
-    extends FlutterRustBridgeWireBase {
+class FlutterRustBridgeWasmWireBase<T extends WasmModule> extends FlutterRustBridgeWireBase {
   final Future<T> init;
 
   FlutterRustBridgeWasmWireBase(FutureOr<T> module)
-      : init = Future.value(module)
-            .then((module) => promiseToFuture(module(null)));
+      : init = Future.value(module).then((module) => promiseToFuture(module()));
 }
 
 typedef PlatformPointer = int;
@@ -137,7 +131,6 @@ class FrbOpaqueBase {
   static PlatformPointer initPtr(int ptr) => ptr;
   static PlatformPointer nullPtr() => 0;
   static bool isStalePtr(PlatformPointer ptr) => ptr == 0;
-  static void finalizerAttach(FrbOpaqueBase opaque, PlatformPointer ptr, int _,
-          OpaqueTypeFinalizer finalizer) =>
+  static void finalizerAttach(FrbOpaqueBase opaque, PlatformPointer ptr, int _, OpaqueTypeFinalizer finalizer) =>
       finalizer.attach(opaque, ptr, detach: opaque);
 }
